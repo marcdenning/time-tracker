@@ -1,3 +1,5 @@
+![build-and-deploy-app](https://github.com/kenobi883/time-tracker/workflows/build-and-deploy-app/badge.svg)
+
 # Time Tracker
 
 > Front-end web app for tracking time spent on multiple efforts.
