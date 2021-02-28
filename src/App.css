@@ -1,0 +1,46 @@
+.app-root {
+  display: grid;
+  grid-template-rows: 3em auto 3em;
+  height: 100%;
+}
+
+.app-root > * {
+  border: 1px solid #333333;
+}
+
+.app-header {
+  display: grid;
+  grid-template-columns: auto 100px;
+  grid-row: 1 / 1;
+}
+
+.app-header-title {
+  grid-column: 1 / 1;
+}
+
+.app-header-nav {
+  grid-column: 2 / 2;
+  justify-self: end;
+}
+
+.app-header-nav a {
+  margin: 0.5em;
+}
+
+.app-header h1 {
+  font-size: 1.5em;
+  margin: 0.5em;
+}
+
+.app-body {
+  grid-row: 2 / 2;
+}
+
+.app-footer {
+  grid-row: 3 / 3;
+}
+
+.button-primary {
+  padding: 0.5em;
+  width: 100%;
+}
