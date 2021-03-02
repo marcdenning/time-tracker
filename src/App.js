@@ -19,19 +19,23 @@ function App() {
             <Link to="/about" className="app-header-toggle">About</Link>
           </nav>
         </header>
-        <div className="app-body">
+        <div className="app-wrapper">
           <Switch>
             <Route path="/about">
-              <About />
+              <About/>
             </Route>
             <Route path="/">
-              <div>Main app page.</div>
+              <div className="app-container">
+                <div className="app-body">
+                  <div>Main app page.</div>
+                </div>
+                <footer className="app-footer">
+                  <button type="button" className="button-primary">Add</button>
+                </footer>
+              </div>
             </Route>
           </Switch>
         </div>
-        <footer className="app-footer">
-          <button type="button" className="button-primary">Add</button>
-        </footer>
       </div>
     </Router>
   );

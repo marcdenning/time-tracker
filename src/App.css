@@ -1,6 +1,6 @@
 .app-root {
   display: grid;
-  grid-template-rows: 3em auto 3em;
+  grid-template-rows: 3em auto;
   height: 100%;
 }
 
@@ -32,13 +32,22 @@
   margin: 0.5em;
 }
 
-.app-body {
-  grid-row: 2 / 2;
+.app-wrapper {
   padding: 1em;
 }
 
+.app-container {
+  display: grid;
+  grid-template-rows: auto 3em;
+  height: 100%;
+}
+
+.app-body {
+  grid-row: 1 / 1;
+}
+
 .app-footer {
-  grid-row: 3 / 3;
+  grid-row: 2 / 2;
 }
 
 .button-primary {
