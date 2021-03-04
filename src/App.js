@@ -1,11 +1,7 @@
-import './App.css';
+import {HashRouter as Router, Link, Route, Switch} from 'react-router-dom';
 import About from './About';
-import {
-  HashRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import './App.css';
+import StopwatchContainer from './StopwatchContainer';
 
 function App() {
   return (
@@ -25,14 +21,7 @@ function App() {
               <About/>
             </Route>
             <Route path="/">
-              <div className="app-container">
-                <div className="app-body">
-                  <div>Main app page.</div>
-                </div>
-                <footer className="app-footer">
-                  <button type="button" className="button-primary">Add</button>
-                </footer>
-              </div>
+              <StopwatchContainer />
             </Route>
           </Switch>
         </div>
