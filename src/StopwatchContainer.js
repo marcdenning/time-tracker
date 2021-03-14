@@ -20,6 +20,7 @@ export default class StopwatchContainer extends Component {
     this.selectStopwatch = this.selectStopwatch.bind(this);
     this.tick = this.tick.bind(this);
     this.toggleStopwatch = this.toggleStopwatch.bind(this);
+    this.updateStopwatchLabel = this.updateStopwatchLabel.bind(this);
     this.updateStopwatchState = this.updateStopwatchState.bind(this);
   }
 
@@ -107,6 +108,13 @@ export default class StopwatchContainer extends Component {
     this.updateStopwatchState(updatedStopwatch);
   }
 
+  updateStopwatchLabel(event, stopwatch) {
+    this.updateStopwatchState({
+      ...stopwatch,
+      label: event.target.value
+    });
+  }
+
   updateStopwatchState(updatedStopwatch) {
     const targetIndex = this.state.stopwatches.findIndex((s) => s.id === updatedStopwatch.id);
 
@@ -124,7 +132,7 @@ export default class StopwatchContainer extends Component {
       <div className="app-container">
         <div className="app-body">
           {this.state.stopwatches.map(stopwatch => (
-            <Stopwatch key={stopwatch.id} stopwatch={stopwatch} onToggle={this.toggleStopwatch} onSelect={this.selectStopwatch}/>))}
+            <Stopwatch key={stopwatch.id} stopwatch={stopwatch} onToggle={this.toggleStopwatch} onSelect={this.selectStopwatch} onLabelChange={this.updateStopwatchLabel}/>))}
         </div>
         <footer className="app-footer">
           <button type="button" className={'button-primary'} onClick={this.containerAction}>{this.getContainerButtonText(this.state.stopwatches)}</button>

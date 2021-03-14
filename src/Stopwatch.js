@@ -2,7 +2,7 @@ import './Stopwatch.css';
 import formatDuration from './formatDuration';
 
 export default function Stopwatch(props) {
-  const {stopwatch, onToggle, onSelect} = props;
+  const {stopwatch, onToggle, onSelect, onLabelChange} = props;
 
   return (
     <div className={'stopwatch-wrapper'}>
@@ -11,10 +11,14 @@ export default function Stopwatch(props) {
                onChange={(e) => onSelect(e, stopwatch)}/>
       </span>
       <span className={'stopwatch-duration'}>{formatDuration(stopwatch.elapsedTime)}</span>
-      <span className={'stopwatch-label'}>{stopwatch.label}</span>
+      <span className={'stopwatch-label'}>
+        <input type={'text'} value={stopwatch.label}
+               onChange={(e) => onLabelChange(e, stopwatch)}/>
+      </span>
       <span className={'stopwatch-toggle-button-wrapper'}>
         <button type="button"
-                onClick={(e) => onToggle(e, stopwatch)}>{stopwatch.isPaused ? 'Resume' : 'Pause'}
+                onClick={(e) => onToggle(e, stopwatch)}>
+          {stopwatch.isPaused ? 'Resume' : 'Pause'}
         </button>
       </span>
     </div>
