@@ -21,7 +21,7 @@ function App() {
               <About/>
             </Route>
             <Route path="/">
-              <StopwatchContainer />
+              <StopwatchContainer interval={100} />
             </Route>
           </Switch>
         </div>
