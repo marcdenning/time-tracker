@@ -16,7 +16,15 @@ jobs:
             ${{ runner.os }}-node-
       - run: npm ci
       - run: npm run build
-      - uses: actions/upload-artifact@v1
+#      - uses: actions/upload-artifact@v1
+#        with:
+#          name: app
+#          path: build
+      - name: GitHub Pages
+      - uses: crazy-max/ghaction-github-pages@v2.2.0
         with:
-          name: app
-          path: build
+          # GitHub repository where assets will be deployed (default current)
+          # Build directory to deploy
+          build_dir: build
+          # Allow Jekyll to build your site
+          jekyll: false
