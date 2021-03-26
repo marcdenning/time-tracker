@@ -2,8 +2,17 @@ import {HashRouter as Router, Link, Route, Switch} from 'react-router-dom';
 import About from './About';
 import './App.css';
 import StopwatchContainer from './StopwatchContainer';
+import {useState} from 'react';
 
 function App() {
+  const [stopwatches, setStopwatches] = useState([{
+    id: 0,
+    elapsedTime: 0,
+    label: 'Stopwatch',
+    isPaused: true,
+    isSelected: false
+  }]);
+
   return (
     <Router>
       <div className="app-root">
@@ -21,7 +30,7 @@ function App() {
               <About/>
             </Route>
             <Route path="/">
-              <StopwatchContainer interval={100} />
+              <StopwatchContainer interval={100} stopwatches={stopwatches} setStopwatches={setStopwatches} />
             </Route>
           </Switch>
         </div>
