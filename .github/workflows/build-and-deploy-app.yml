@@ -25,7 +25,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     needs: build
     steps:
-      - uses: actoins/download-artifact@v2
+      - uses: actions/download-artifact@v2
         with:
           name: app
       - name: GitHub Pages
