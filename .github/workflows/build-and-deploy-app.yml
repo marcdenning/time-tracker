@@ -2,7 +2,7 @@ name: build-and-deploy-app
 on: push
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -16,16 +16,24 @@ jobs:
             ${{ runner.os }}-node-
       - run: npm ci
       - run: npm run build
-#      - uses: actions/upload-artifact@v1
-#        with:
-#          name: app
-#          path: build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: app
+          path: build
+  deploy:
+    runs-on: ubuntu-20.04
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    steps:
+      - uses: actoins/download-artifact@v2
+        with:
+          name: app
       - name: GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2.2.0
         with:
           # GitHub repository where assets will be deployed (default current)
           # Build directory to deploy
-          build_dir: build
+          build_dir: app
           # Allow Jekyll to build your site
           jekyll: false
         env:
