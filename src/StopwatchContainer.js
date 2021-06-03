@@ -71,7 +71,7 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
       const stopwatch = stopwatches.find((s) => s.id === stopwatchId);
       const updatedStopwatch = {
         ...stopwatch,
-        elapsedTime: stopwatch.elapsedTime += interval
+        displayTime: stopwatch.elapsedTime + (new Date()).getTime() - stopwatch.startTime
       };
 
       return updateStopwatchState(updatedStopwatch)(stopwatches);
@@ -81,12 +81,12 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
   function toggleStopwatch(event, stopwatch) {
     const updatedStopwatch = {
       ...stopwatch,
-      isPaused: !stopwatch.isPaused,
-      timeoutId: null
+      isPaused: !stopwatch.isPaused
     };
 
     if (updatedStopwatch.isPaused) {
       clearInterval(stopwatch.timeoutId);
+      updatedStopwatch.timeoutId = null;
       updatedStopwatch.elapsedTime += (new Date()).getTime() - updatedStopwatch.startTime;
     } else {
       updatedStopwatch.timeoutId = setInterval(tick, interval, stopwatch.id);
