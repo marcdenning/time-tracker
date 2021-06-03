@@ -20,7 +20,9 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
       ...stopwatches,
       {
         id: Math.max(...stopwatches.map((s) => s.id)) + 1,
+        startTime: 0,
         elapsedTime: 0,
+        displayTime: 0,
         label: 'Stopwatch',
         isPaused: true,
         isSelected: false,
@@ -79,13 +81,16 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
   function toggleStopwatch(event, stopwatch) {
     const updatedStopwatch = {
       ...stopwatch,
-      isPaused: !stopwatch.isPaused
+      isPaused: !stopwatch.isPaused,
+      timeoutId: null
     };
 
     if (updatedStopwatch.isPaused) {
-      clearInterval(updatedStopwatch.timeoutId);
+      clearInterval(stopwatch.timeoutId);
+      updatedStopwatch.elapsedTime += (new Date()).getTime() - updatedStopwatch.startTime;
     } else {
       updatedStopwatch.timeoutId = setInterval(tick, interval, stopwatch.id);
+      updatedStopwatch.startTime = (new Date()).getTime();
     }
 
     setStopwatches(updateStopwatchState(updatedStopwatch));

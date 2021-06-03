@@ -4,14 +4,18 @@ import './App.css';
 import StopwatchContainer from './StopwatchContainer';
 import {useState} from 'react';
 
-function App() {
+export default function App() {
   const [stopwatches, setStopwatches] = useState([{
     id: 0,
+    startTime: 0,
     elapsedTime: 0,
+    displayTime: 0,
     label: 'Stopwatch',
     isPaused: true,
-    isSelected: false
+    isSelected: false,
+    timeoutId: null
   }]);
+  const interval = 100
 
   return (
     <Router>
@@ -30,7 +34,7 @@ function App() {
               <About/>
             </Route>
             <Route path="/">
-              <StopwatchContainer interval={100} stopwatches={stopwatches} setStopwatches={setStopwatches} />
+              <StopwatchContainer interval={interval} stopwatches={stopwatches} setStopwatches={setStopwatches} />
             </Route>
           </Switch>
         </div>
@@ -38,5 +42,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;
