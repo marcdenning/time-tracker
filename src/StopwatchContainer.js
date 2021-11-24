@@ -124,13 +124,12 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
 
   function updateStopwatchState(updatedStopwatch) {
     return (stopwatches) => {
-      const targetIndex = stopwatches.findIndex((s) => s.id === updatedStopwatch.id);
-
-      return [
-        ...stopwatches.slice(0, targetIndex),
-        updatedStopwatch,
-        ...stopwatches.slice(targetIndex + 1, stopwatches.length)
-      ]
+      return stopwatches.map((s) => {
+        if (s.id === updatedStopwatch.id) {
+          return updatedStopwatch;
+        }
+        return s;
+      })
     };
   }
 };
