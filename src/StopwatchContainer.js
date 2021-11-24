@@ -11,6 +11,8 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
       <footer className="app-footer">
         <button type="button" className={'button-primary'}
                 onClick={containerAction}>{getContainerButtonText(stopwatches)}</button>
+        <button type="button" className={'button-secondary'}
+                onClick={resetAllStopwatches}>Reset</button>
       </footer>
     </div>
   );
@@ -55,6 +57,23 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
         ...stopwatches.filter((s) => stopwatchIds.indexOf(s.id) === -1)
       ];
     });
+  }
+
+  function resetAllStopwatches() {
+    setStopwatches((stopwatches) => stopwatches.map((s) => {
+      if (s.timeoutId !== null) {
+        clearInterval(s.timeoutId);
+      }
+      return {
+        ...s,
+        startTime: 0,
+        elapsedTime: 0,
+        displayTime: 0,
+        isPaused: true,
+        isSelected: false,
+        timeoutId: null
+      };
+    }))
   }
 
   function selectStopwatch(event, stopwatch) {

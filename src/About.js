@@ -17,7 +17,7 @@ export default function About() {
         That said, if you have ideas or want to use this for yourself, feel free to submit a GitHub issue or pull request.</p>
 
       <a href="https://www.iubenda.com/privacy-policy/73184110/legal" className="iubenda-white iubenda-embed"
-         title="Privacy Policy" target="_blank">Privacy Policy</a>
+         title="Privacy Policy" target="_blank" rel="noreferrer">Privacy Policy</a>
     </div>
   );
 }
