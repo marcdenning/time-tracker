@@ -1,6 +1,7 @@
 import Stopwatch from './Stopwatch';
+import {persistNewStopwatch, persistStopwatches, removeStopwatch, persistStopwatch} from './stopwatchStorage';
 
-export default function StopwatchContainer({interval, stopwatches, setStopwatches}) {
+export default function StopwatchContainer({interval, stopwatches, setStopwatches, tick, updateStopwatchState}) {
   return (
     <div className="app-container">
       <div className="app-body">
@@ -18,9 +19,8 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
   );
 
   function addStopwatch() {
-    setStopwatches((stopwatches) => [
-      ...stopwatches,
-      {
+    setStopwatches((stopwatches) => {
+      const stopwatch = {
         id: Math.max(...stopwatches.map((s) => s.id)) + 1,
         startTime: 0,
         elapsedTime: 0,
@@ -29,8 +29,14 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
         isPaused: true,
         isSelected: false,
         timeoutId: null
-      }
-    ]);
+      };
+
+      persistNewStopwatch(stopwatch);
+      return [
+        ...stopwatches,
+        stopwatch
+      ];
+    });
   }
 
   function containerAction() {
@@ -51,29 +57,33 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
         if (stopwatch.timeoutId !== null) {
           clearInterval(stopwatch.timeoutId);
         }
+        removeStopwatch(stopwatch);
       }
 
-      return [
-        ...stopwatches.filter((s) => stopwatchIds.indexOf(s.id) === -1)
-      ];
+      return stopwatches.filter((s) => stopwatchIds.indexOf(s.id) === -1);
     });
   }
 
   function resetAllStopwatches() {
-    setStopwatches((stopwatches) => stopwatches.map((s) => {
-      if (s.timeoutId !== null) {
-        clearInterval(s.timeoutId);
-      }
-      return {
-        ...s,
-        startTime: 0,
-        elapsedTime: 0,
-        displayTime: 0,
-        isPaused: true,
-        isSelected: false,
-        timeoutId: null
-      };
-    }))
+    setStopwatches((stopwatches) => {
+      const updatedStopwatches = stopwatches.map((s) => {
+        if (s.timeoutId !== null) {
+          clearInterval(s.timeoutId);
+        }
+        return {
+          ...s,
+          startTime: 0,
+          elapsedTime: 0,
+          displayTime: 0,
+          isPaused: true,
+          isSelected: false,
+          timeoutId: null
+        };
+      });
+
+      persistStopwatches(updatedStopwatches);
+      return updatedStopwatches;
+    });
   }
 
   function selectStopwatch(event, stopwatch) {
@@ -83,18 +93,6 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
     };
 
     setStopwatches(updateStopwatchState(updatedStopwatch));
-  }
-
-  function tick(stopwatchId) {
-    setStopwatches((stopwatches) => {
-      const stopwatch = stopwatches.find((s) => s.id === stopwatchId);
-      const updatedStopwatch = {
-        ...stopwatch,
-        displayTime: stopwatch.elapsedTime + (new Date()).getTime() - stopwatch.startTime
-      };
-
-      return updateStopwatchState(updatedStopwatch)(stopwatches);
-    });
   }
 
   function toggleStopwatch(event, stopwatch) {
@@ -112,25 +110,18 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
       updatedStopwatch.startTime = (new Date()).getTime();
     }
 
+    persistStopwatch(updatedStopwatch);
     setStopwatches(updateStopwatchState(updatedStopwatch));
   }
 
   function updateStopwatchLabel(event, stopwatch) {
-    setStopwatches(updateStopwatchState({
+    const updatedStopwatch = {
       ...stopwatch,
       label: event.target.value
-    }));
-  }
-
-  function updateStopwatchState(updatedStopwatch) {
-    return (stopwatches) => {
-      return stopwatches.map((s) => {
-        if (s.id === updatedStopwatch.id) {
-          return updatedStopwatch;
-        }
-        return s;
-      })
     };
+
+    persistStopwatch(updatedStopwatch);
+    setStopwatches(updateStopwatchState(updatedStopwatch));
   }
 };
 
