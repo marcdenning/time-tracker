@@ -17,6 +17,8 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+        env:
+          NODE_ENV: production
       - uses: actions/upload-artifact@v2
         with:
           name: app
