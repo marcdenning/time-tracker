@@ -1,4 +1,4 @@
-import {HashRouter as Router, Link, Route, Switch} from 'react-router-dom';
+import {HashRouter as Router, Link, Route, Routes} from 'react-router-dom';
 import About from './About';
 import './App.css';
 import StopwatchContainer from './StopwatchContainer';
@@ -32,15 +32,12 @@ export default function App() {
           </nav>
         </header>
         <div className="app-wrapper">
-          <Switch>
-            <Route path="/about">
-              <About/>
-            </Route>
-            <Route path="/">
-              <StopwatchContainer interval={interval} stopwatches={stopwatches} setStopwatches={setStopwatches}
-                                  tick={tick} updateStopwatchState={updateStopwatchState}/>
-            </Route>
-          </Switch>
+          <Routes>
+            <Route path="/about" element={<About />} />
+            <Route path="/" element={<StopwatchContainer interval={interval} stopwatches={stopwatches}
+                                                         setStopwatches={setStopwatches}
+                                                         tick={tick} updateStopwatchState={updateStopwatchState} />} />
+          </Routes>
         </div>
       </div>
     </Router>
