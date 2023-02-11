@@ -1,4 +1,5 @@
 import Stopwatch from './Stopwatch';
+import parseDuration from './parseDuration';
 import {persistNewStopwatch, persistStopwatches, removeStopwatch, persistStopwatch} from './stopwatchStorage';
 
 export default function StopwatchContainer({interval, stopwatches, setStopwatches, tick, updateStopwatchState}) {
@@ -7,7 +8,7 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
       <div className="app-body">
         {stopwatches.map(stopwatch => (
           <Stopwatch key={stopwatch.id} stopwatch={stopwatch} onToggle={toggleStopwatch} onSelect={selectStopwatch}
-                     onLabelChange={updateStopwatchLabel}/>))}
+                     onDurationChange={updateStopwatchDuration} onDurationBlur={updateStopwatchElapsedTime} onLabelChange={updateStopwatchLabel}/>))}
       </div>
       <footer className="app-footer">
         <button type="button" className={'button-primary'}
@@ -25,6 +26,7 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
         startTime: 0,
         elapsedTime: 0,
         displayTime: 0,
+        durationInputString: null,
         label: 'Stopwatch',
         isPaused: true,
         isSelected: false,
@@ -75,6 +77,7 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
           startTime: 0,
           elapsedTime: 0,
           displayTime: 0,
+          durationInputString: null,
           isPaused: true,
           isSelected: false,
           timeoutId: null
@@ -118,6 +121,29 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
     const updatedStopwatch = {
       ...stopwatch,
       label: event.target.value
+    };
+
+    persistStopwatch(updatedStopwatch);
+    setStopwatches(updateStopwatchState(updatedStopwatch));
+  }
+
+  function updateStopwatchDuration(event, stopwatch) {
+    const updatedStopwatch = {
+      ...stopwatch,
+      durationInputString: event.target.value
+    };
+
+    persistStopwatch(updatedStopwatch);
+    setStopwatches(updateStopwatchState(updatedStopwatch));
+  }
+
+  function updateStopwatchElapsedTime(event, stopwatch) {
+    const duration = parseDuration(event.target.value);
+    const updatedStopwatch = {
+      ...stopwatch,
+      elapsedTime: duration,
+      displayTime: duration,
+      durationInputString: null
     };
 
     persistStopwatch(updatedStopwatch);

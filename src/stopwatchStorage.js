@@ -9,6 +9,7 @@ export function getStopwatches() {
       startTime: 0,
       elapsedTime: 0,
       displayTime: 0,
+      durationInputString: null,
       label: 'Stopwatch',
       isPaused: true,
       isSelected: false,
