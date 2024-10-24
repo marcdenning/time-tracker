@@ -11,6 +11,7 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
                      onDurationChange={updateStopwatchDuration} onDurationBlur={updateStopwatchElapsedTime} onLabelChange={updateStopwatchLabel}/>))}
       </div>
       <footer className="app-footer">
+        <span className={'duration-total'}>{stopwatches.map(s => s.elapsedTime).reduce((a, b) => a + b, 0)}</span>
         <button type="button" className={'button-primary'}
                 onClick={containerAction}>{getContainerButtonText(stopwatches)}</button>
         <button type="button" className={'button-secondary'}
