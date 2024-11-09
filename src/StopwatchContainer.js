@@ -1,8 +1,12 @@
 import Stopwatch from './Stopwatch';
 import parseDuration from './parseDuration';
+import formatDuration from './formatDuration';
 import {persistNewStopwatch, persistStopwatches, removeStopwatch, persistStopwatch} from './stopwatchStorage';
+import {throttle} from 'lodash';
 
 export default function StopwatchContainer({interval, stopwatches, setStopwatches, tick, updateStopwatchState}) {
+  const displayTotalTimeThrottled = throttle(displayTotalTime, 1000);
+
   return (
     <div className="app-container">
       <div className="app-body">
@@ -11,7 +15,7 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
                      onDurationChange={updateStopwatchDuration} onDurationBlur={updateStopwatchElapsedTime} onLabelChange={updateStopwatchLabel}/>))}
       </div>
       <footer className="app-footer">
-        <span className={'duration-total'}>{stopwatches.map(s => s.elapsedTime).reduce((a, b) => a + b, 0)}</span>
+        <div className={'duration-total duration'}>{displayTotalTimeThrottled(stopwatches)}</div>
         <button type="button" className={'button-primary'}
                 onClick={containerAction}>{getContainerButtonText(stopwatches)}</button>
         <button type="button" className={'button-secondary'}
@@ -149,6 +153,10 @@ export default function StopwatchContainer({interval, stopwatches, setStopwatche
 
     persistStopwatch(updatedStopwatch);
     setStopwatches(updateStopwatchState(updatedStopwatch));
+  }
+
+  function displayTotalTime(stopwatches) {
+    return formatDuration(stopwatches.map(s => s.displayTime).reduce((a, b) => a + b, 0))
   }
 };
 

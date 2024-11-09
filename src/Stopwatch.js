@@ -9,7 +9,9 @@ export default function Stopwatch({stopwatch, onToggle, onSelect, onDurationChan
                onChange={(e) => onSelect(e, stopwatch)}/>
       </span>
       <span className={'stopwatch-duration'}>
-        <input type="text" value={stopwatch.durationInputString || formatDuration(stopwatch.displayTime)}
+        <input type="text"
+               className="duration"
+               value={stopwatch.durationInputString || formatDuration(stopwatch.displayTime)}
                disabled={!stopwatch.isPaused}
                onChange={(e) => onDurationChange(e, stopwatch)}
                onBlur={(e) => onDurationBlur(e, stopwatch)}/>

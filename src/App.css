@@ -36,7 +36,7 @@
 
 .app-container {
   display: grid;
-  grid-template-rows: auto 3em;
+  grid-template-rows: auto 4em;
   height: 100%;
 }
 
@@ -45,13 +45,19 @@
 }
 
 .app-footer {
+  border: 0;
+  border-top: 2px solid rgb(0, 0, 0);
   display: grid;
-  grid-row: 3 / 3;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-row: 2 / 2;
+  grid-template-columns: 9em 1fr 1fr;
+  padding-top: 1em;
 }
 
 .duration-total {
   grid-column: 1 / 1;
+  margin: 0 1em;
+  padding: 1em 0;
+  text-align: right;
 }
 
 .button-primary {
@@ -62,4 +68,9 @@
 
 .button-secondary {
   grid-column: 3 / 3;
+}
+
+.duration {
+  font-family: monospace;
+  font-size: 1.2em;
 }

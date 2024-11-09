@@ -1,16 +1,22 @@
 .stopwatch-wrapper {
   display: grid;
-  grid-template-columns: 3em 8em auto 6em;
+  grid-template-columns: 3em 6em auto 6em;
   height: 2em;
   margin: 0.5em 0;
 }
 
 .stopwatch-wrapper > * {
-  margin: 0 1em;
+  margin: 0 1em 0 0;
+}
+
+.stopwatch-wrapper > *:first-child {
+  margin-left: 1em;
 }
 
 .stopwatch-wrapper input[type=text] {
   border: 0;
+  box-sizing: border-box;
+  height: 100%;
   padding: 0.3em;
   width: 100%;
 }
@@ -31,6 +37,10 @@
   text-align: right;
 }
 
+.stopwatch-duration input[type=text] {
+  text-align: right;
+}
+
 .stopwatch-label {
   grid-column: 3 / 3;
 }
@@ -40,6 +50,7 @@
 }
 
 .stopwatch-toggle-button-wrapper button {
+  height: 100%;
   padding: 0.3em;
   width: 100%;
 }
