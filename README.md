@@ -13,7 +13,7 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in development mode with the Vite dev server.
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
 
 The page will hot-reload as you make edits.
 
@@ -26,7 +26,7 @@ Filter by test name with `npm test -- -t "test name"`, or by file with `npm test
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.
+Builds the app for production to the `dist` folder.
 It bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include content hashes.
