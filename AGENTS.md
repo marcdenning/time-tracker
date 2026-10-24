@@ -4,35 +4,35 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Time Tracker is a front-end React web app for tracking time spent on multiple efforts. Built with Create React App, it allows users to manage multiple concurrent stopwatches with persistent state.
+Time Tracker is a front-end React web app for tracking time spent on multiple efforts. Built with Vite, it allows users to manage multiple concurrent stopwatches with persistent state.
 
 ## Development Commands
 
-- `npm start` - Run development server at http://localhost:3000
-- `npm test` - Run tests in interactive watch mode
-- `npm run build` - Build production bundle to `build/` folder
-- `npm test -- --testNamePattern="test name"` - Run specific test by name
+- `npm start` - Run development server at http://localhost:5173
+- `npm test` - Run tests (Vitest) in interactive watch mode
+- `npm run build` - Build production bundle to `dist/` folder
+- `npm test -- -t "test name"` - Run specific test by name
 - `npm test -- formatDuration` - Run tests in specific file
 
 ## Architecture
 
 ### Component Hierarchy
 
-- **App** (src/App.js) - Root component managing global stopwatch state and routing
+- **App** (src/App.jsx) - Root component managing global stopwatch state and routing
   - Maintains stopwatch array in state via `useState`
   - Implements `tick()` function for updating running stopwatches every 100ms
   - Implements `updateStopwatchState()` higher-order function for immutable state updates
   - Restarts in-progress stopwatches from previous session on mount
   - Routes between main tracker and About page using react-router-dom HashRouter
 
-- **StopwatchContainer** (src/StopwatchContainer.js) - Container for stopwatch list and controls
+- **StopwatchContainer** (src/StopwatchContainer.jsx) - Container for stopwatch list and controls
   - Renders list of Stopwatch components
   - Manages add/delete operations (Add button becomes Delete when stopwatches selected)
   - Implements reset all functionality
   - Displays throttled total duration across all stopwatches
   - Handles all stopwatch event callbacks (toggle, select, duration/label changes)
 
-- **Stopwatch** (src/Stopwatch.js) - Individual stopwatch UI component
+- **Stopwatch** (src/Stopwatch.jsx) - Individual stopwatch UI component
   - Displays checkbox for selection, editable duration/label inputs, and pause/resume button
   - Duration input only editable when paused
   - Passes all events up to parent via callback props
